@@ -3214,23 +3214,38 @@ function p:Window(_)
 				p:Create("UISizeConstraint", { Name = "UISizeConstraint", MaxSize = Vector2.new(150, math.huge) }),
 			})
 		
+			local sliderTextFrame = p:Create("Frame", {
+				Name = "SliderTextFrame",
+				BackgroundColor3 = Color3.fromRGB(25, 25, 25),
+				Position = UDim2.new(0, -20, 0.5, 0),
+				AnchorPoint = Vector2.new(1, 0.5),
+				Size = UDim2.fromOffset(40, 16),
+				Parent = sliderMain,
+			})
+
+			p:Create("UICorner", {
+				CornerRadius = UDim.new(0, 6),
+				Parent = sliderTextFrame,
+			})
+
+			local stroke = p:Create("UIStroke", {
+				Color = Color3.fromRGB(80, 80, 80),
+				Thickness = 1,
+				Parent = sliderTextFrame,
+			})
+
 			local sliderText = p:Create("TextBox", {
 				Name = "SliderText",
+				BackgroundTransparency = 1,
 				FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/GothamSSm.json"),
 				Text = h.Default,
 				TextColor3 = Color3.fromRGB(170, 170, 170),
 				TextSize = 12,
-				TextWrapped = true,
 				TextXAlignment = Enum.TextXAlignment.Right,
-				AnchorPoint = Vector2.new(1, 0.5),
-				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-				BackgroundTransparency = 1,
-				BorderColor3 = Color3.fromRGB(0, 0, 0),
-				Position = UDim2.new(0, -20, 0.5, 0),
-				Size = UDim2.fromOffset(40, 16),
-				Parent = sliderMain,
+				Size = UDim2.fromScale(1, 1),
+				Parent = sliderTextFrame,
 			})
-		
+
 			local percent = math.clamp(h.Default / h.Max, 0, 1)
 			percent = percent ~= percent and 0 or percent
 			percent = math.floor(percent / h.Decimal) * h.Decimal
