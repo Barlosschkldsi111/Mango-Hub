@@ -1721,9 +1721,45 @@ function p:Window(_)
 		Size = UDim2.new(0, 20, 0, 20),
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		BackgroundTransparency = 1,
-		BorderColor3 = Color3.fromRGB(0, 0, 0),
 		BorderSizePixel = 0,
+		ClipsDescendants = true,
 	})
+
+	self:Create("UICorner", {
+		CornerRadius = UDim.new(0, 10),
+		Parent = _,
+	})
+
+	self:Create("Frame", {
+		Parent = _,
+		Position = UDim2.new(0, 5, 0, 5),
+		Size = UDim2.new(1, -5, 1, -5),
+		BackgroundTransparency = 1,
+	}, {
+		self:Create("UICorner", {
+			CornerRadius = UDim.new(0, 10),
+		}),
+		self:Create("UIStroke", {
+			Thickness = 2,
+			Color = Color3.fromRGB(160,160,160),
+		}),
+	})
+
+	self:Create("Frame", {
+		Parent = _,
+		Position = UDim2.new(0, 9, 0, 9),
+		Size = UDim2.new(1, -9, 1, -9),
+		BackgroundTransparency = 1,
+	}, {
+		self:Create("UICorner", {
+			CornerRadius = UDim.new(0, 10),
+		}),
+		self:Create("UIStroke", {
+			Thickness = 2,
+			Color = Color3.fromRGB(160,160,160),
+		}),
+	})
+
 	o:MakeResizeable(n, _)
 	local _ = self:Create("Frame", {
 		Name = "NavbarFrame",
@@ -3239,7 +3275,7 @@ function p:Window(_)
 			BackgroundTransparency = 0.8,     
 			Position = UDim2.new(0, -20, 0.5, 0),
 			AnchorPoint = Vector2.new(1, 0.5),
-			Size = UDim2.fromOffset(50, 20),
+			Size = UDim2.fromOffset(70, 20),
 			ZIndex = 10,
 			Parent = sliderMain,
 		})
@@ -3262,6 +3298,7 @@ function p:Window(_)
 			BackgroundTransparency = 1,
 			FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/GothamSSm.json"),
 			Text = h.Default,
+			Position = UDim2.new(0, -10, 0, 0),
 			TextColor3 = Color3.fromRGB(220, 220, 220),
 			TextSize = 12,
 			TextXAlignment = Enum.TextXAlignment.Right,
@@ -3270,7 +3307,6 @@ function p:Window(_)
 			Parent = sliderTextFrame,
 		})
 
-		
 			local percent = math.clamp(h.Default / h.Max, 0, 1)
 			percent = percent ~= percent and 0 or percent
 			percent = math.floor(percent / h.Decimal) * h.Decimal
