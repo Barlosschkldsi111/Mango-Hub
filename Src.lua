@@ -1717,47 +1717,27 @@ function p:Window(_)
 		Name = "ResizeTouch",
 		Parent = n,
 		Visible = true,
-		Position = UDim2.new(1, -20, 1, -20),
-		Size = UDim2.new(0, 20, 0, 20),
-		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+		Position = UDim2.new(1, 0, 1, 0),
+		Size = UDim2.new(0, 30, 0, 30),
 		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
-		ClipsDescendants = true,
 	})
 
-	self:Create("UICorner", {
-		CornerRadius = UDim.new(0, 10),
-		Parent = _,
-	})
-
+	local thickness = 3
+	local out = 10
 	self:Create("Frame", {
 		Parent = _,
-		Position = UDim2.new(0, 5, 0, 5),
-		Size = UDim2.new(1, -5, 1, -5),
-		BackgroundTransparency = 1,
-	}, {
-		self:Create("UICorner", {
-			CornerRadius = UDim.new(0, 10),
-		}),
-		self:Create("UIStroke", {
-			Thickness = 2,
-			Color = Color3.fromRGB(160,160,160),
-		}),
+		Position = UDim2.new(0, 0, 0, -out),
+		Size = UDim2.new(0, thickness, 0, out),
+		BackgroundColor3 = Color3.fromRGB(180,180,180),
+		BorderSizePixel = 0,
 	})
-
 	self:Create("Frame", {
 		Parent = _,
-		Position = UDim2.new(0, 9, 0, 9),
-		Size = UDim2.new(1, -9, 1, -9),
-		BackgroundTransparency = 1,
-	}, {
-		self:Create("UICorner", {
-			CornerRadius = UDim.new(0, 10),
-		}),
-		self:Create("UIStroke", {
-			Thickness = 2,
-			Color = Color3.fromRGB(160,160,160),
-		}),
+		Position = UDim2.new(-out, 0, 0, 0),
+		Size = UDim2.new(0, out, 0, thickness),
+		BackgroundColor3 = Color3.fromRGB(180,180,180),
+		BorderSizePixel = 0,
 	})
 
 	o:MakeResizeable(n, _)
