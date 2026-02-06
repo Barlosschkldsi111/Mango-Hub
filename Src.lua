@@ -2916,12 +2916,22 @@ function p:Window(_)
 					AutoButtonColor = false,
 					BackgroundColor3 = Color3.fromRGB(120, 120, 120),
 					BackgroundTransparency = _ and 0.9 or 1,
-					BorderColor3 = Color3.fromRGB(0, 0, 0),
+					BorderSizePixel = 0, -- ปิด border เดิม
 					Size = UDim2.new(1, -5, 0, 32),
 					ZIndex = 23,
 					Parent = c,
 				}, {
-					p:Create("UICorner", { Name = "UICorner", CornerRadius = UDim.new(0, 6) }),
+					p:Create("UICorner", { 
+						Name = "UICorner", 
+						CornerRadius = UDim.new(0, 6) 
+					}),
+					p:Create("UIStroke", {
+						Name = "Stroke",
+						Color = Color3.fromRGB(0, 0, 0),
+						Thickness = 1.5,
+						Transparency = 0,
+						ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+					}),
 					p:Create("TextLabel", {
 						Name = "OptionLabel",
 						FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/GothamSSm.json"),
@@ -2933,7 +2943,7 @@ function p:Window(_)
 						AutomaticSize = Enum.AutomaticSize.Y,
 						BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 						BackgroundTransparency = 1,
-						BorderColor3 = Color3.fromRGB(0, 0, 0),
+						BorderSizePixel = 0,
 						Position = UDim2.fromOffset(10, 0),
 						Size = UDim2.fromScale(0.96, 1),
 					}),
@@ -2942,13 +2952,17 @@ function p:Window(_)
 					Name = "Selected",
 					AnchorPoint = Vector2.new(0, 0.5),
 					BackgroundColor3 = p.Themes.BackgroundColor,
-					BorderColor3 = Color3.fromRGB(0, 0, 0),
 					BorderSizePixel = 0,
 					Position = UDim2.fromOffset(-1, 16),
 					Size = UDim2.fromOffset(4, 14),
 					Visible = _,
 					Parent = a,
-				}, { p:Create("UICorner", { Name = "UICorner", CornerRadius = UDim.new(0, 2) }) })
+				}, { 
+					p:Create("UICorner", { 
+						Name = "UICorner", 
+						CornerRadius = UDim.new(0, 2) 
+					}) 
+				})
 				table.insert(p.Storage.Selected, _)
 				table.insert(h.Options, { Selected = _, Option = a })
 				function h:Update(_)
@@ -3002,11 +3016,13 @@ function p:Window(_)
 						p.Flags[tostring(i.Flags)] = i.Default
 					end
 					e.Text = typeof(i.Default) == "table" and table.concat(i.Default, ", ") or i.Default
+
 					if h.Callback then
 						h.Callback(i.Default)
 					end
 				end)
 			end
+
 			for _, _ in pairs(i.Values) do
 				h:Add(_, typeof(i.Default) == "table" and table.find(i.Default, _) or i.Default == _)
 			end
