@@ -2911,12 +2911,12 @@ function p:Window(_)
 					Name = "Option",
 					FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/SourceSansPro.json"),
 					Text = "",
-					TextColor3 = Color3.fromRGB(0, 0, 0),
+					TextColor3 = Color3.fromRGB(68, 68, 68),
 					TextSize = 14,
 					AutoButtonColor = false,
 					BackgroundColor3 = Color3.fromRGB(120, 120, 120),
 					BackgroundTransparency = _ and 0.9 or 1,
-					BorderSizePixel = 0, -- ปิด border เดิม
+					BorderSizePixel = 0,
 					Size = UDim2.new(1, -5, 0, 32),
 					ZIndex = 23,
 					Parent = c,
@@ -2927,7 +2927,7 @@ function p:Window(_)
 					}),
 					p:Create("UIStroke", {
 						Name = "Stroke",
-						Color = Color3.fromRGB(0, 0, 0),
+						Color = Color3.fromRGB(68, 68, 68),
 						Thickness = 1.5,
 						Transparency = 0,
 						ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
