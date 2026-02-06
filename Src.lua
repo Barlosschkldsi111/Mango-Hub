@@ -3216,7 +3216,7 @@ function p:Window(_)
 		
 			local sliderTextFrame = p:Create("Frame", {
 			Name = "SliderTextFrame",
-			BackgroundColor3 = Color3.fromRGB(0, 0, 0),
+			BackgroundColor3 = Color3.fromRGB(120, 120, 120),
 			BackgroundTransparency = 0.5,     
 			Position = UDim2.new(0, -20, 0.5, 0),
 			AnchorPoint = Vector2.new(1, 0.5),
@@ -3231,9 +3231,9 @@ function p:Window(_)
 		})
 
 		local stroke = p:Create("UIStroke", {
-			Color = Color3.fromRGB(0, 0, 0),
+			Color = Color3.fromRGB(120, 120, 120), 
 			Thickness = 1.5,
-			Transparency = 0.2,
+			Transparency = 0.2, 
 			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 			Parent = sliderTextFrame,
 		})
