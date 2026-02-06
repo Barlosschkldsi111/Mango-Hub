@@ -2899,7 +2899,6 @@ function p:Window(_)
 				end
 			end
 
-			-- Connect search box text changed event
 			p:Connect(searchBox:GetPropertyChangedSignal("Text"), function()
 				filterOptions(searchBox.Text)
 			end)
@@ -2907,11 +2906,12 @@ function p:Window(_)
 			function h:Add(a, _)
 				local b = a or "OptionValue"
 				local _ = _ or false
+
 				local a = p:Create("TextButton", {
 					Name = "Option",
 					FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/SourceSansPro.json"),
 					Text = "",
-					TextColor3 = Color3.fromRGB(68, 68, 68),
+					TextColor3 = Color3.fromRGB(0, 0, 0),
 					TextSize = 14,
 					AutoButtonColor = false,
 					BackgroundColor3 = Color3.fromRGB(120, 120, 120),
@@ -2925,13 +2925,15 @@ function p:Window(_)
 						Name = "UICorner", 
 						CornerRadius = UDim.new(0, 6) 
 					}),
+
 					p:Create("UIStroke", {
 						Name = "Stroke",
-						Color = Color3.fromRGB(68, 68, 68),
+						Color = Color3.fromRGB(39, 38, 38),
 						Thickness = 1.5,
-						Transparency = 0,
+						Transparency = 0.5,
 						ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 					}),
+
 					p:Create("TextLabel", {
 						Name = "OptionLabel",
 						FontFace = p.Settings.FontFace or Font.new("rbxasset://fonts/families/GothamSSm.json"),
@@ -2948,6 +2950,7 @@ function p:Window(_)
 						Size = UDim2.fromScale(0.96, 1),
 					}),
 				})
+
 				local _ = p:Create("Frame", {
 					Name = "Selected",
 					AnchorPoint = Vector2.new(0, 0.5),
