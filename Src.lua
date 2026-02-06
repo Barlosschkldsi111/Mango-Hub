@@ -3203,7 +3203,7 @@ function p:Window(_)
 				Name = "Slider",
 				AnchorPoint = Vector2.new(1, 0.5),
 				BackgroundColor3 = Color3.fromRGB(120, 120, 120),
-				BackgroundTransparency = 0.2,
+				BackgroundTransparency = 0.8,
 				BorderColor3 = Color3.fromRGB(0, 0, 0),
 				BorderSizePixel = 0,
 				Position = UDim2.new(1, -10, 0.5, 0),
@@ -3217,7 +3217,7 @@ function p:Window(_)
 			local sliderTextFrame = p:Create("Frame", {
 			Name = "SliderTextFrame",
 			BackgroundColor3 = Color3.fromRGB(120, 120, 120), 
-			BackgroundTransparency = 0.2,     
+			BackgroundTransparency = 0.8,     
 			Position = UDim2.new(0, -20, 0.5, 0),
 			AnchorPoint = Vector2.new(1, 0.5),
 			Size = UDim2.fromOffset(50, 20),
