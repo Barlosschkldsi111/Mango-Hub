@@ -1717,29 +1717,13 @@ function p:Window(_)
 		Name = "ResizeTouch",
 		Parent = n,
 		Visible = true,
-		Position = UDim2.new(1, 0, 1, 0),
-		Size = UDim2.new(0, 30, 0, 30),
+		Position = UDim2.new(1, -20, 1, -20),
+		Size = UDim2.new(0, 20, 0, 20),
+		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		BackgroundTransparency = 1,
+		BorderColor3 = Color3.fromRGB(0, 0, 0),
 		BorderSizePixel = 0,
 	})
-
-	local thickness = 3
-	local out = 10
-	self:Create("Frame", {
-		Parent = _,
-		Position = UDim2.new(0, 0, 0, -out),
-		Size = UDim2.new(0, thickness, 0, out),
-		BackgroundColor3 = Color3.fromRGB(180,180,180),
-		BorderSizePixel = 0,
-	})
-	self:Create("Frame", {
-		Parent = _,
-		Position = UDim2.new(-out, 0, 0, 0),
-		Size = UDim2.new(0, out, 0, thickness),
-		BackgroundColor3 = Color3.fromRGB(180,180,180),
-		BorderSizePixel = 0,
-	})
-
 	o:MakeResizeable(n, _)
 	local _ = self:Create("Frame", {
 		Name = "NavbarFrame",
