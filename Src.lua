@@ -3203,7 +3203,7 @@ function p:Window(_)
 				Name = "Slider",
 				AnchorPoint = Vector2.new(1, 0.5),
 				BackgroundColor3 = Color3.fromRGB(120, 120, 120),
-				BackgroundTransparency = 0.4,
+				BackgroundTransparency = 0.2,
 				BorderColor3 = Color3.fromRGB(0, 0, 0),
 				BorderSizePixel = 0,
 				Position = UDim2.new(1, -10, 0.5, 0),
