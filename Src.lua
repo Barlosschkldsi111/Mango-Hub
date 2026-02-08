@@ -2427,7 +2427,7 @@ function p:Window(_)
 		
 			return c
 		end
-		
+
 		function h:AddToggle(t)
 			local i = { Callback = function() end }
 			local t = t or {}
@@ -2487,7 +2487,7 @@ function p:Window(_)
 					Enum.FontStyle.Normal
 				),
 				Text = j.Title,
-				TextColor3 = p.Themes.TextColor,
+				TextColor3 = (p.Themes and p.Themes.TextColor) or Color3.fromRGB(255,255,255),
 				TextSize = 13,
 				TextXAlignment = Enum.TextXAlignment.Left,
 				BackgroundTransparency = 1,
@@ -2505,7 +2505,7 @@ function p:Window(_)
 						Enum.FontStyle.Normal
 					),
 					Text = j.Description,
-					TextColor3 = p.Themes.SubTextColor,
+					TextColor3 = (p.Themes and p.Themes.SubTextColor) or Color3.fromRGB(180,180,180),
 					TextSize = 12,
 					TextWrapped = true,
 					TextXAlignment = Enum.TextXAlignment.Left,
@@ -2517,8 +2517,9 @@ function p:Window(_)
 				})
 			end
 
-			local bg1 = o:LightenColor(p.Themes.BackgroundColor, 0.5)
-			local bg2 = o:LightenColor(p.Themes.BackgroundColor, 0.25)
+			local themeBg = (p.Themes and p.Themes.BackgroundColor) or Color3.fromRGB(40,40,40)
+			local bg1 = o:LightenColor(themeBg, 0.5)
+			local bg2 = o:LightenColor(themeBg, 0.25)
 
 			local toggleFrame = p:Create("Frame", {
 				AnchorPoint = Vector2.new(1, 0.5),
@@ -2578,7 +2579,7 @@ function p:Window(_)
 					p.Flags[tostring(j.Flags)] = j.Default
 				end
 
-				local accent = o:LightenColor(p.Themes.BackgroundColor, 0.25)
+				local accent = o:LightenColor((p.Themes and p.Themes.BackgroundColor) or Color3.fromRGB(40,40,40), 0.25)
 
 				o:Thread(function()
 					o:Animation(toggleFrame, {
@@ -2603,7 +2604,8 @@ function p:Window(_)
 					}, p.AnimationSpeed)
 
 					o:Animation(stroke, {
-						Color = j.Default and p.Themes.AccentColor or Color3.fromRGB(125, 125, 125)
+						Color = j.Default and ((p.Themes and p.Themes.AccentColor) or Color3.fromRGB(0,170,255))
+							or Color3.fromRGB(125, 125, 125)
 					}, p.AnimationSpeed)
 				end)
 
@@ -2632,6 +2634,7 @@ function p:Window(_)
 
 			return i
 		end
+
 
 		function h:AddDropdown(_)
 			local h = { Expanded = false, Options = {}, Callback = function() end }
