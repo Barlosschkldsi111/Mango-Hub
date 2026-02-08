@@ -2427,6 +2427,7 @@ function p:Window(_)
 		
 			return c
 		end
+		
 		function h:AddToggle(t)
 			local i = { Callback = function() end }
 			local t = t or {}
@@ -2446,7 +2447,7 @@ function p:Window(_)
 				Text = "",
 				TextSize = 14,
 				AutomaticSize = Enum.AutomaticSize.Y,
-				BackgroundColor3 = p.Themes.BackgroundColor,
+				BackgroundColor3 = Color3.fromRGB(120, 120, 120),
 				BackgroundTransparency = 0.87,
 				Size = UDim2.new(1, 0, 0, 0),
 				LayoutOrder = 7,
@@ -2456,7 +2457,7 @@ function p:Window(_)
 				p:Create("UICorner", { CornerRadius = UDim.new(0, 4) }),
 				p:Create("UIStroke", {
 					ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-					Color = p.Themes.OutlineColor or Color3.fromRGB(35, 35, 35)
+					Color = Color3.fromRGB(35, 35, 35)
 				}),
 			})
 
@@ -2486,7 +2487,7 @@ function p:Window(_)
 					Enum.FontStyle.Normal
 				),
 				Text = j.Title,
-				TextColor3 = p.Themes.TextColor or Color3.fromRGB(240, 240, 240),
+				TextColor3 = p.Themes.TextColor,
 				TextSize = 13,
 				TextXAlignment = Enum.TextXAlignment.Left,
 				BackgroundTransparency = 1,
@@ -2504,7 +2505,7 @@ function p:Window(_)
 						Enum.FontStyle.Normal
 					),
 					Text = j.Description,
-					TextColor3 = p.Themes.SubTextColor or Color3.fromRGB(170, 170, 170),
+					TextColor3 = p.Themes.SubTextColor,
 					TextSize = 12,
 					TextWrapped = true,
 					TextXAlignment = Enum.TextXAlignment.Left,
@@ -2533,13 +2534,13 @@ function p:Window(_)
 
 			local stroke = p:Create("UIStroke", {
 				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Color = p.Themes.AccentColor,
+				Color = Color3.fromRGB(125, 125, 125),
 				Parent = toggleFrame,
 			})
 
 			local icon = p:Create("ImageLabel", {
 				Image = "http://www.roblox.com/asset/?id=12266946128",
-				ImageColor3 = j.Default and bg2 or Color3.fromRGB(125, 125, 125),
+				ImageColor3 = j.Default and bg2 or Color3.fromRGB(255, 255, 255),
 				ImageTransparency = 0.5,
 				AnchorPoint = j.Default and Vector2.new(1, 0.5) or Vector2.new(0, 0.5),
 				Position = j.Default and UDim2.new(1, -2, 0.5, 0) or UDim2.new(0, 2, 0.5, 0),
@@ -2549,7 +2550,6 @@ function p:Window(_)
 				Parent = toggleFrame,
 			})
 
-			-- STORAGE (รองรับ Theme runtime)
 			p.Storage.Toggles = p.Storage.Toggles or {}
 			p.Storage.ToggleImages = p.Storage.ToggleImages or {}
 			p.Storage.ToggleStrokes = p.Storage.ToggleStrokes or {}
@@ -2564,6 +2564,13 @@ function p:Window(_)
 				table.insert(p.Storage.ToggleDescs, descLabel)
 			end
 
+			function i:Update()
+				titleLabel.Size = UDim2.new(1, -54, 0, titleLabel.TextBounds.Y)
+				if descLabel then
+					descLabel.Size = UDim2.new(1, -54, 0, descLabel.TextBounds.Y)
+				end
+			end
+
 			function i:Set(val)
 				j.Default = val
 
@@ -2571,8 +2578,7 @@ function p:Window(_)
 					p.Flags[tostring(j.Flags)] = j.Default
 				end
 
-				local accent = p.Themes.AccentColor
-				local bg2 = o:LightenColor(p.Themes.BackgroundColor, 0.25)
+				local accent = o:LightenColor(p.Themes.BackgroundColor, 0.25)
 
 				o:Thread(function()
 					o:Animation(toggleFrame, {
@@ -2580,16 +2586,24 @@ function p:Window(_)
 					}, p.AnimationSpeed)
 
 					o:Animation(icon, {
-						AnchorPoint = j.Default and Vector2.new(1, 0.5) or Vector2.new(0, 0.5),
+						AnchorPoint = j.Default and Vector2.new(1, 0.5) or Vector2.new(0, 0.5)
+					}, p.AnimationSpeed)
+
+					o:Animation(icon, {
 						Position = j.Default and UDim2.new(1, -2, 0.5, 0)
-							or UDim2.new(0, 2, 0.5, 0),
-						ImageTransparency = j.Default and 0 or 0.5,
-						ImageColor3 = j.Default and bg2 or Color3.fromRGB(125, 125, 125)
+							or UDim2.new(0, 2, 0.5, 0)
+					}, p.AnimationSpeed)
+
+					o:Animation(icon, {
+						ImageTransparency = j.Default and 0 or 0.5
+					}, p.AnimationSpeed)
+
+					o:Animation(icon, {
+						ImageColor3 = j.Default and accent or Color3.fromRGB(125, 125, 125)
 					}, p.AnimationSpeed)
 
 					o:Animation(stroke, {
-						Color = j.Default and accent or Color3.fromRGB(125, 125, 125),
-						Thickness = j.Default and 0 or 1
+						Color = j.Default and p.Themes.AccentColor or Color3.fromRGB(125, 125, 125)
 					}, p.AnimationSpeed)
 				end)
 
@@ -2606,7 +2620,9 @@ function p:Window(_)
 
 			function i:OnChanged(cb)
 				i.Callback = cb
-				i.Callback(j.Default)
+				if i.Callback then
+					i.Callback(j.Default)
+				end
 				return i
 			end
 
