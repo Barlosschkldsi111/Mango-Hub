@@ -1965,7 +1965,7 @@ function p:Window(_)
 		AnchorPoint = Vector2.new(0, 0.5),
 		Position = UDim2.new(0, 0, 0, 17),
 		Size = UDim2.new(0, 4, 0, 16),
-		BackgroundColor3 = p.Themes.BackgroundColor,
+		BackgroundColor3 = (p.Themes and p.Themes.BackgroundColor) or Color3.fromRGB(40,40,40),
 		BorderColor3 = Color3.fromRGB(0, 0, 0),
 		BorderSizePixel = 0,
 	}, { p:Create("UICorner", { CornerRadius = UDim.new(0, 2) }) })
@@ -2960,7 +2960,7 @@ function p:Window(_)
 				local _ = p:Create("Frame", {
 					Name = "Selected",
 					AnchorPoint = Vector2.new(0, 0.5),
-					BackgroundColor3 = p.Themes.BackgroundColor,
+					BackgroundColor3 = (p.Themes and p.Themes.BackgroundColor) or Color3.fromRGB(40,40,40),
 					BorderSizePixel = 0,
 					Position = UDim2.fromOffset(-1, 16),
 					Size = UDim2.fromOffset(4, 14),
@@ -3283,7 +3283,7 @@ function p:Window(_)
 		
 			local sliderValue = p:Create("Frame", {
 				Name = "SliderValue",
-				BackgroundColor3 = p.Themes.BackgroundColor,
+				BackgroundColor3 = (p.Themes and p.Themes.BackgroundColor) or Color3.fromRGB(40,40,40),
 				BorderColor3 = Color3.fromRGB(0, 0, 0),
 				BorderSizePixel = 0,
 				Size = UDim2.fromScale(percent, 1),
