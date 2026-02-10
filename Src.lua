@@ -1974,7 +1974,7 @@ function p:Window(_)
 		Name = "ObjectElements",
 		Parent = n,
 		Visible = true,
-		Position = UDim2.new(0, 186, 0, 94),
+		Position = UDim2.new(0, 186, 0, 50),
 		Size = UDim2.new(1, -192, 1, -102),
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		BackgroundTransparency = 1,
@@ -3618,7 +3618,7 @@ function p:Window(_)
 				BackgroundColor3 = Color3.fromRGB(180,180,180),
 				BorderSizePixel = 0,
 				Size = UDim2.new(0.5, -40, 0, 1),
-				Position = UDim2.new(0, 10, 0, 0),
+				Position = UDim2.new(0, 5, 0, 20),
 				Parent = Border
 			})
 
@@ -3635,13 +3635,13 @@ function p:Window(_)
 				AutomaticSize = Enum.AutomaticSize.X,
 				Size = UDim2.new(0, 0, 0, 22),
 				AnchorPoint = Vector2.new(0.5, 0),
-				Position = UDim2.new(0.5, 0, 0, -11),
+				Position = UDim2.new(0.5, 0, 0,7),
 				Parent = Border
 			})
 
 			local Text = p:Create("TextLabel", {
 				FontFace = p.Settings.FontFace or Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold),
-				Text = _.Title, -- << ATM จะอยู่ตรงนี้
+				Text = _.Title,
 				TextColor3 = Color3.fromRGB(240,240,240),
 				TextSize = 16,
 				BackgroundTransparency = 1,
@@ -3954,4 +3954,6 @@ function p:Window(_)
 	o:SetTheme(p.Theme)
 	return k
 end
+game:GetService("CoreGui").NEXT_GEN.MainFrame.TextLabel
+
 return p, o
