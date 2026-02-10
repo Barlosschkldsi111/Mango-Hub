@@ -3577,61 +3577,122 @@ function p:Window(_)
 		
 		function h:AddSection(_)
 			local b = {}
-			_ = _ or {}
-			local Title = _.title or _.Title or "Section"
+			local _ = _ or {}
+			local _ = {
+				Title = _.title or _.Title or "Section"
+			}
 
 			local c = p:Create("Frame", {
 				Name = "SectionHolder",
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, 0),
-				AutomaticSize = Enum.AutomaticSize.Y,
-				Parent = g
+				LayoutOrder = 7,
+				Size = UDim2.new(1, 0, 0, 60),
+				Parent = g,
 			})
 
-			local Border = p:Create("Frame", {
-				BackgroundColor3 = Color3.fromRGB(60, 45, 25),
-				Size = UDim2.new(1, -12, 0, 0),
-				AutomaticSize = Enum.AutomaticSize.Y,
-				Position = UDim2.new(0, 6, 0, 0),
+			local a = p:Create("UIListLayout", {
+				SortOrder = Enum.SortOrder.LayoutOrder,
+				Padding = UDim.new(0, 6),
 				Parent = c
 			})
 
-			p:Create("UICorner", {
-				CornerRadius = UDim.new(0, 10),
-				Parent = Border
+			local Border = p:Create("Frame", {
+				BackgroundTransparency = 1,
+				Size = UDim2.new(1, -10, 1, 0),
+				Position = UDim2.new(0, 5, 0, 0),
+				Parent = c
 			})
 
-			p:Create("UIStroke", {
-				Color = Color3.fromRGB(130, 100, 60),
+			local Stroke = p:Create("UIStroke", {
+				Color = Color3.fromRGB(180,180,180),
 				Thickness = 1,
 				Parent = Border
 			})
 
-			local Header = p:Create("TextLabel", {
-				Text = Title,
-				FontFace = p.Settings.FontFace,
-				TextSize = 16,
-				TextColor3 = Color3.fromRGB(240,240,240),
-				BackgroundTransparency = 1,
-				Size = UDim2.new(1, -20, 0, 26),
-				Position = UDim2.new(0, 10, 0, 6),
-				TextXAlignment = Enum.TextXAlignment.Left,
+			local Round = p:Create("UICorner", {
+				CornerRadius = UDim.new(0, 10),
 				Parent = Border
+			})
+
+			local LineL = p:Create("Frame", {
+				BackgroundColor3 = Color3.fromRGB(180,180,180),
+				BorderSizePixel = 0,
+				Size = UDim2.new(0, 100, 0, 1),
+				Position = UDim2.new(0, 10, 0, 20),
+				Parent = Border
+			})
+
+			local LineR = p:Create("Frame", {
+				BackgroundColor3 = Color3.fromRGB(180,180,180),
+				BorderSizePixel = 0,
+				Size = UDim2.new(0, 100, 0, 1),
+				Position = UDim2.new(1, -110, 0, 20),
+				Parent = Border
+			})
+
+			local TitleBG = p:Create("Frame", {
+				BackgroundTransparency = 1,
+				AutomaticSize = Enum.AutomaticSize.X,
+				Size = UDim2.new(0, 0, 0, 22),
+				AnchorPoint = Vector2.new(0.5, 0),
+				Position = UDim2.new(0.5, 0, 0, 7),
+				Parent = Border
+			})
+
+			local Text = p:Create("TextLabel", {
+				FontFace = p.Settings.FontFace or Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold),
+				Text = _.Title,
+				TextColor3 = Color3.fromRGB(240,240,240),
+				TextSize = 16,
+				BackgroundTransparency = 1,
+				AutomaticSize = Enum.AutomaticSize.X,
+				Size = UDim2.new(0, 0, 1, 0),
+				Parent = TitleBG
+			})
+
+			local UIPad = p:Create("UIPadding", {
+				PaddingLeft = UDim.new(0, 10),
+				PaddingRight = UDim.new(0, 10),
+				Parent = TitleBG
 			})
 
 			local Content = p:Create("Frame", {
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, -20, 0, 0),
-				AutomaticSize = Enum.AutomaticSize.Y,
-				Position = UDim2.new(0, 10, 0, 38),
+				Size = UDim2.new(1, -20, 1, -30),
+				Position = UDim2.new(0, 10, 0, 30),
 				Parent = Border
 			})
 
-			local List = p:Create("UIListLayout", {
-				Padding = UDim.new(0, 8),
+			local ContentList = p:Create("UIListLayout", {
+				SortOrder = Enum.SortOrder.LayoutOrder,
+				Padding = UDim.new(0, 6),
 				Parent = Content
 			})
 
+			local function UpdateLines()
+				local totalWidth = Border.AbsoluteSize.X
+				local textWidth = TitleBG.AbsoluteSize.X
+				local padding = 20
+
+				local lineWidth = (totalWidth - textWidth - padding*2) / 2
+				if lineWidth < 10 then lineWidth = 10 end
+
+				LineL.Size = UDim2.new(0, lineWidth, 0, 1)
+				LineR.Size = UDim2.new(0, lineWidth, 0, 1)
+
+				LineL.Position = UDim2.new(0, 10, 0, 20)
+				LineR.Position = UDim2.new(0, totalWidth - lineWidth - 10, 0, 20)
+			end
+			
+			p:Connect(Text:GetPropertyChangedSignal("AbsoluteSize"), UpdateLines)
+			p:Connect(Border:GetPropertyChangedSignal("AbsoluteSize"), UpdateLines)
+
+			function b:AddParagraph(_)
+				_ = _ or {}
+				_.Sections = Content
+				return h:AddParagraph(_)
+			end
+			
 			function b:AddToggle(_)
 				_ = _ or {}
 				_.Sections = Content
@@ -3662,12 +3723,14 @@ function p:Window(_)
 				return h:AddInput(_)
 			end
 
-			p:Connect(List:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-				Border.Size = UDim2.new(1, -12, 0, List.AbsoluteContentSize.Y + 50)
+			p:Connect(ContentList:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+				Border.Size = UDim2.new(1, -10, 0, ContentList.AbsoluteContentSize.Y + 50)
+				c.Size = UDim2.new(1, 0, 0, Border.AbsoluteSize.Y + 10)
 			end)
 
 			return b
 		end
+
 
 		return h
 	end
