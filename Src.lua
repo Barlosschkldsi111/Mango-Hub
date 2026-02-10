@@ -3584,7 +3584,7 @@ function p:Window(_)
 				Name = "SectionHolder",
 				BackgroundTransparency = 1,
 				LayoutOrder = 7,
-				Size = UDim2.new(1, 0, 0, 60),
+				Size = UDim2.new(1, 0, 0, 50),
 				Parent = g,
 				ZIndex = 1
 			})
@@ -3595,9 +3595,9 @@ function p:Window(_)
 				Parent = c
 			})
 
-			local Border = p:Create("Frame", {
+			local Line = p:Create("Frame", {
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, -10, 1, 0),
+				Size = UDim2.new(1, -10, 0, 24),
 				Position = UDim2.new(0, 5, 0, 0),
 				Parent = c,
 				ZIndex = 1
@@ -3606,20 +3606,12 @@ function p:Window(_)
 			local Stroke = p:Create("UIStroke", {
 				Color = Color3.fromRGB(160,160,160),
 				Thickness = 1,
-				Parent = Border,
-				ZIndex = 2
+				Parent = Line
 			})
 
 			local Round = p:Create("UICorner", {
 				CornerRadius = UDim.new(0, 10),
-				Parent = Border
-			})
-
-			local Header = p:Create("Frame", {
-				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, 30),
-				Parent = Border,
-				ZIndex = 3
+				Parent = Line
 			})
 
 			local Text = p:Create("TextLabel", {
@@ -3629,19 +3621,19 @@ function p:Window(_)
 				TextColor3 = Color3.fromRGB(240,240,240),
 				TextSize = 16,
 				BackgroundTransparency = 1,
-				AnchorPoint = Vector2.new(0.5, 0),
-				Position = UDim2.new(0.5, 0, 0, -11),
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				Position = UDim2.new(0.5, 0, 0.5, 0),
 				AutomaticSize = Enum.AutomaticSize.X,
-				Parent = Border,
+				Parent = Line,
 				TextXAlignment = Enum.TextXAlignment.Center,
-				ZIndex = 10 
+				ZIndex = 5
 			})
 
 			local Content = p:Create("Frame", {
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, -20, 1, -30),
+				Size = UDim2.new(1, -20, 0, 0),
 				Position = UDim2.new(0, 10, 0, 30),
-				Parent = Border,
+				Parent = c,
 				ZIndex = 1
 			})
 
@@ -3728,12 +3720,13 @@ function p:Window(_)
 			end
 
 			p:Connect(ContentList:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-				Border.Size = UDim2.new(1, -10, 0, ContentList.AbsoluteContentSize.Y + 50)
-				c.Size = UDim2.new(1, 0, 0, Border.AbsoluteSize.Y + 10)
+				Content.Size = UDim2.new(1, -20, 0, ContentList.AbsoluteContentSize.Y)
+				c.Size = UDim2.new(1, 0, 0, Content.AbsoluteSize.Y + 40)
 			end)
 
 			return b
 		end
+
 
 		return h
 	end
