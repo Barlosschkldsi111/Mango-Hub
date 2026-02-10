@@ -3574,7 +3574,7 @@ function p:Window(_)
 			end
 			return d
 		end
-
+		
 		function h:AddSection(_)
 			local b = {}
 			local _ = _ or {}
@@ -3584,34 +3584,26 @@ function p:Window(_)
 				Name = "SectionHolder",
 				BackgroundTransparency = 1,
 				LayoutOrder = 7,
-				Size = UDim2.new(1, 0, 0, 50),
-				Parent = g,
-				ZIndex = 1
+				Size = UDim2.new(1, 0, 0, 40),
+				Parent = g
 			})
 
-			local a = p:Create("UIListLayout", {
-				SortOrder = Enum.SortOrder.LayoutOrder,
-				Padding = UDim.new(0, 6),
+			local TopLine = p:Create("Frame", {
+				BackgroundTransparency = 1,
+				Size = UDim2.new(1, -20, 0, 20),
+				Position = UDim2.new(0, 10, 0, 0),
 				Parent = c
 			})
 
-			local Line = p:Create("Frame", {
-				BackgroundTransparency = 1,
-				Size = UDim2.new(1, -10, 0, 24),
-				Position = UDim2.new(0, 5, 0, 0),
-				Parent = c,
-				ZIndex = 1
-			})
-
-			local Stroke = p:Create("UIStroke", {
+			local TopStroke = p:Create("UIStroke", {
 				Color = Color3.fromRGB(160,160,160),
 				Thickness = 1,
-				Parent = Line
+				Parent = TopLine
 			})
 
-			local Round = p:Create("UICorner", {
-				CornerRadius = UDim.new(0, 10),
-				Parent = Line
+			local TopRound = p:Create("UICorner", {
+				CornerRadius = UDim.new(0, 8),
+				Parent = TopLine
 			})
 
 			local Text = p:Create("TextLabel", {
@@ -3624,7 +3616,7 @@ function p:Window(_)
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				Position = UDim2.new(0.5, 0, 0.5, 0),
 				AutomaticSize = Enum.AutomaticSize.X,
-				Parent = Line,
+				Parent = TopLine,
 				TextXAlignment = Enum.TextXAlignment.Center,
 				ZIndex = 5
 			})
@@ -3632,9 +3624,8 @@ function p:Window(_)
 			local Content = p:Create("Frame", {
 				BackgroundTransparency = 1,
 				Size = UDim2.new(1, -20, 0, 0),
-				Position = UDim2.new(0, 10, 0, 30),
-				Parent = c,
-				ZIndex = 1
+				Position = UDim2.new(0, 10, 0, 25),
+				Parent = c
 			})
 
 			local ContentList = p:Create("UIListLayout", {
@@ -3642,6 +3633,30 @@ function p:Window(_)
 				Padding = UDim.new(0, 6),
 				Parent = Content
 			})
+
+			local BottomLine = p:Create("Frame", {
+				BackgroundTransparency = 1,
+				Size = UDim2.new(1, -20, 0, 20),
+				Position = UDim2.new(0, 10, 0, 0),
+				Parent = c
+			})
+
+			local BottomStroke = p:Create("UIStroke", {
+				Color = Color3.fromRGB(160,160,160),
+				Thickness = 1,
+				Parent = BottomLine
+			})
+
+			local BottomRound = p:Create("UICorner", {
+				CornerRadius = UDim.new(0, 8),
+				Parent = BottomLine
+			})
+
+			p:Connect(ContentList:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+				Content.Size = UDim2.new(1, -20, 0, ContentList.AbsoluteContentSize.Y)
+				BottomLine.Position = UDim2.new(0, 10, 0, Content.Position.Y.Offset + Content.Size.Y.Offset + 5)
+				c.Size = UDim2.new(1, 0, 0, BottomLine.Position.Y.Offset + 20)
+			end)
 
 			function b:AddParagraph(_)
 				local _ = _ or {}
@@ -3710,7 +3725,7 @@ function p:Window(_)
 				local _ = {
 					Title = _.title or _.Title or "Input",
 					Default = _.default or _.Default or _.value or _.Value or "",
-					Placeholder = _.placeholder or _.Placeholder or "",
+					Placeholder = _.placeholder or _..Placeholder or "",
 					Numeric = _.numeric or _.Numeric or false,
 					Finished = _.finished or _.Finished or false,
 					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
@@ -3719,14 +3734,8 @@ function p:Window(_)
 				return h:AddInput(_)
 			end
 
-			p:Connect(ContentList:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-				Content.Size = UDim2.new(1, -20, 0, ContentList.AbsoluteContentSize.Y)
-				c.Size = UDim2.new(1, 0, 0, Content.AbsoluteSize.Y + 40)
-			end)
-
 			return b
 		end
-
 
 		return h
 	end
