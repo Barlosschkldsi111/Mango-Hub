@@ -3669,7 +3669,88 @@ function p:Window(_)
 				Parent = Content
 			})
 
-			local function UpdateLines()
+			function b:AddParagraph(_)
+				local _ = _ or {}
+				local _ = {
+					Title = _.title or _.Title or "Paragraph",
+					Content = _.content or _.Content or _.desc or _.Desc,
+					Sections = c,
+				}
+				local _ = h:AddParagraph(_)
+				return _
+			end
+			function b:AddButton(_)
+				local _ = _ or {}
+				local _ = {
+					Title = _.title or _.Title or "Button",
+					Description = _.description or _.Description or _.desc or _.Desc or false,
+					Callback = _.callback or _.Callback or function() end,
+					Sections = c,
+				}
+				local _ = h:AddButton(_)
+				return _
+			end
+			function b:AddToggle(_)
+				local _ = _ or {}
+				local _ = {
+					Title = _.title or _.Title or "Toggle",
+					Description = _.description or _.Description or _.desc or _.Descm or false,
+					Default = _.default or _.Default or false,
+					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
+					Sections = c,
+				}
+				local _ = h:AddToggle(_)
+				return _
+			end
+			function b:AddDropdown(_)
+				local _ = _ or {}
+				local _ = {
+					Title = _.title or _.Title or "Dropdown",
+					Description = _.description or _.Description or _.desc or _.Desc or false,
+					Values = _.values or _.Values or _.options or _.Options or _.list or _.List or {},
+					Multi = _.multi or _.Multi or false,
+					Default = _.default or _.Default or {},
+					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
+					Sections = c,
+				}
+				local _ = h:AddDropdown(_)
+				return _
+			end
+			function b:AddSlider(_)
+				local _ = _ or {}
+				local _ = {
+					Title = _.title or _.Title or "Slider",
+					Description = _.description or _.Description or _.desc or _.Desc or false,
+					Default = _.default or _.Default or _.value or _.Value or 0,
+					Min = _.min or _.Min or 0,
+					Max = _.max or _.Max or 100,
+					Decimal = _.decimal or _.Decimal or 0,
+					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
+					Sections = c,
+				}
+				local _ = h:AddSlider(_)
+				return _
+			end
+			function b:AddInput(_)
+				local _ = _ or {}
+				local _ = {
+					Title = _.title or _.Title or "Input",
+					Default = _.default or _.Default or _.value or _.Value or "",
+					Placeholder = _.placeholder or _.Placeholder or "",
+					Numeric = _.numeric or _.Numeric or false,
+					Finished = _.finished or _.Finished or false,
+					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
+					Sections = c,
+				}
+				local _ = h:AddInput(_)
+				return _
+			end
+
+			p:Connect(ContentList:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+				Border.Size = UDim2.new(1, -10, 0, ContentList.AbsoluteContentSize.Y + 50)
+				c.Size = UDim2.new(1, 0, 0, Border.AbsoluteSize.Y + 10)
+			end)
+						local function UpdateLines()
 				local totalWidth = Border.AbsoluteSize.X
 				local textWidth = TitleBG.AbsoluteSize.X
 				local padding = 20
@@ -3687,67 +3768,9 @@ function p:Window(_)
 			task.defer(UpdateLines)
 			p:Connect(Text:GetPropertyChangedSignal("AbsoluteSize"), UpdateLines)
 			p:Connect(Border:GetPropertyChangedSignal("AbsoluteSize"), UpdateLines)
-			
-			function b:AddButton(_)
-				local _ = _ or {}
-				_ = {
-					Title = _.title or _.Title or "Button",
-					Description = _.description or _.Description or _.desc or _.Desc or false,
-					Callback = _.callback or _.Callback or function() end,
-					Sections = Content,
-				}
-				return h:AddButton(_)
-			end
-
-			function b:AddToggle(_)
-				local _ = _ or {}
-				_ = {
-					Title = _.title or _.Title or "Toggle",
-					Description = _.description or _.Description or _.desc or _.Desc or false,
-					Default = _.default or _.Default or false,
-					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
-					Sections = Content,
-				}
-				return h:AddToggle(_)
-			end
-
-			function b:AddSlider(_)
-				local _ = _ or {}
-				_ = {
-					Title = _.title or _.Title or "Slider",
-					Description = _.description or _.Description or _.desc or _.Desc or false,
-					Default = _.default or _.Default or 0,
-					Min = _.min or _.Min or 0,
-					Max = _.max or _.Max or 100,
-					Decimal = _.decimal or _.Decimal or 0,
-					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
-					Sections = Content,
-				}
-				return h:AddSlider(_)
-			end
-
-			function b:AddInput(_)
-				local _ = _ or {}
-				_ = {
-					Title = _.title or _.Title or "Input",
-					Default = _.default or _.Default or "",
-					Placeholder = _.placeholder or _.Placeholder or "",
-					Numeric = _.numeric or _.Numeric or false,
-					Finished = _.finished or _.Finished or false,
-					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
-					Sections = Content,
-				}
-				return h:AddInput(_)
-			end
-
-			p:Connect(ContentList:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-				Border.Size = UDim2.new(1, -10, 0, ContentList.AbsoluteContentSize.Y + 50)
-				c.Size = UDim2.new(1, 0, 0, Border.AbsoluteSize.Y + 10)
-			end)
 
 			return b
 		end
-
 
 		return h
 	end
