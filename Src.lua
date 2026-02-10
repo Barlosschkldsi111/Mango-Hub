@@ -1886,7 +1886,7 @@ function p:Window(_)
 			Parent = d,
 		})
 	end)
-	local d = p:Create("TextLabel", {
+	--[[local d = p:Create("TextLabel", {
 		RichText = true,
 		Visible = false,
 		Text = "Main",
@@ -1901,7 +1901,7 @@ function p:Window(_)
 		BackgroundTransparency = 1,
 		BorderColor3 = Color3.fromRGB(0, 0, 0),
 		Parent = n,
-	})
+	})]]
 	local _ = p:Create("Frame", {
 		Name = "SidebarHolder",
 		Visible = true,
@@ -3954,4 +3954,6 @@ function p:Window(_)
 	o:SetTheme(p.Theme)
 	return k
 end
+game:GetService("CoreGui").NEXT_GEN.MainFrame.TextLabel
+
 return p, o
