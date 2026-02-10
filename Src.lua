@@ -3617,16 +3617,16 @@ function p:Window(_)
 			local LineL = p:Create("Frame", {
 				BackgroundColor3 = Color3.fromRGB(180,180,180),
 				BorderSizePixel = 0,
-				Size = UDim2.new(0.5, -40, 0, 1),
-				Position = UDim2.new(0, 5, 0, 20),
+				Size = UDim2.new(0, 100, 0, 1),
+				Position = UDim2.new(0, 10, 0, 20),
 				Parent = Border
 			})
 
 			local LineR = p:Create("Frame", {
 				BackgroundColor3 = Color3.fromRGB(180,180,180),
 				BorderSizePixel = 0,
-				Size = UDim2.new(0.5, -40, 0, 1),
-				Position = UDim2.new(0.5, 40, 0, 20),
+				Size = UDim2.new(0, 100, 0, 1),
+				Position = UDim2.new(1, -110, 0, 20),
 				Parent = Border
 			})
 
@@ -3669,6 +3669,25 @@ function p:Window(_)
 				Parent = Content
 			})
 
+			local function UpdateLines()
+				local totalWidth = Border.AbsoluteSize.X
+				local textWidth = TitleBG.AbsoluteSize.X
+				local padding = 20
+
+				local lineWidth = (totalWidth - textWidth - padding*2) / 2
+				if lineWidth < 10 then lineWidth = 10 end
+
+				LineL.Size = UDim2.new(0, lineWidth, 0, 1)
+				LineR.Size = UDim2.new(0, lineWidth, 0, 1)
+
+				LineL.Position = UDim2.new(0, 10, 0, 20)
+				LineR.Position = UDim2.new(0, totalWidth - lineWidth - 10, 0, 20)
+			end
+
+			task.defer(UpdateLines)
+			p:Connect(Text:GetPropertyChangedSignal("AbsoluteSize"), UpdateLines)
+			p:Connect(Border:GetPropertyChangedSignal("AbsoluteSize"), UpdateLines)
+			
 			function b:AddButton(_)
 				local _ = _ or {}
 				_ = {
@@ -3728,6 +3747,7 @@ function p:Window(_)
 
 			return b
 		end
+
 
 		return h
 	end
