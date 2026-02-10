@@ -3577,197 +3577,94 @@ function p:Window(_)
 		
 		function h:AddSection(_)
 			local b = {}
-			local _ = _ or {}
-			local _ = {
-				Title = _.title or _.Title or "Section"
-			}
+			_ = _ or {}
+			local Title = _.title or _.Title or "Section"
 
 			local c = p:Create("Frame", {
 				Name = "SectionHolder",
 				BackgroundTransparency = 1,
-				LayoutOrder = 7,
-				Size = UDim2.new(1, 0, 0, 60),
-				Parent = g,
-			})
-
-			local a = p:Create("UIListLayout", {
-				SortOrder = Enum.SortOrder.LayoutOrder,
-				Padding = UDim.new(0, 6),
-				Parent = c
+				Size = UDim2.new(1, 0, 0, 0),
+				AutomaticSize = Enum.AutomaticSize.Y,
+				Parent = g
 			})
 
 			local Border = p:Create("Frame", {
-				BackgroundTransparency = 1,
-				Size = UDim2.new(1, -10, 1, 0),
-				Position = UDim2.new(0, 5, 0, 0),
+				BackgroundColor3 = Color3.fromRGB(60, 45, 25),
+				Size = UDim2.new(1, -12, 0, 0),
+				AutomaticSize = Enum.AutomaticSize.Y,
+				Position = UDim2.new(0, 6, 0, 0),
 				Parent = c
 			})
 
-			local Stroke = p:Create("UIStroke", {
-				Color = Color3.fromRGB(180,180,180),
-				Thickness = 1,
-				Parent = Border
-			})
-
-			local Round = p:Create("UICorner", {
+			p:Create("UICorner", {
 				CornerRadius = UDim.new(0, 10),
 				Parent = Border
 			})
 
-			local LineL = p:Create("Frame", {
-				BackgroundColor3 = Color3.fromRGB(180,180,180),
-				BorderSizePixel = 0,
-				Size = UDim2.new(0, 100, 0, 1),
-				Position = UDim2.new(0, 10, 0, 20),
+			p:Create("UIStroke", {
+				Color = Color3.fromRGB(130, 100, 60),
+				Thickness = 1,
 				Parent = Border
 			})
 
-			local LineR = p:Create("Frame", {
-				BackgroundColor3 = Color3.fromRGB(180,180,180),
-				BorderSizePixel = 0,
-				Size = UDim2.new(0, 100, 0, 1),
-				Position = UDim2.new(1, -110, 0, 20),
-				Parent = Border
-			})
-
-			local TitleBG = p:Create("Frame", {
-				BackgroundTransparency = 1,
-				AutomaticSize = Enum.AutomaticSize.X,
-				Size = UDim2.new(0, 0, 0, 22),
-				AnchorPoint = Vector2.new(0.5, 0),
-				Position = UDim2.new(0.5, 0, 0, 7),
-				Parent = Border
-			})
-
-			local Text = p:Create("TextLabel", {
-				FontFace = p.Settings.FontFace or Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold),
-				Text = _.Title,
-				TextColor3 = Color3.fromRGB(240,240,240),
+			local Header = p:Create("TextLabel", {
+				Text = Title,
+				FontFace = p.Settings.FontFace,
 				TextSize = 16,
+				TextColor3 = Color3.fromRGB(240,240,240),
 				BackgroundTransparency = 1,
-				AutomaticSize = Enum.AutomaticSize.X,
-				Size = UDim2.new(0, 0, 1, 0),
-				Parent = TitleBG
-			})
-
-			local UIPad = p:Create("UIPadding", {
-				PaddingLeft = UDim.new(0, 10),
-				PaddingRight = UDim.new(0, 10),
-				Parent = TitleBG
+				Size = UDim2.new(1, -20, 0, 26),
+				Position = UDim2.new(0, 10, 0, 6),
+				TextXAlignment = Enum.TextXAlignment.Left,
+				Parent = Border
 			})
 
 			local Content = p:Create("Frame", {
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, -20, 1, -30),
-				Position = UDim2.new(0, 10, 0, 30),
+				Size = UDim2.new(1, -20, 0, 0),
+				AutomaticSize = Enum.AutomaticSize.Y,
+				Position = UDim2.new(0, 10, 0, 38),
 				Parent = Border
 			})
 
-			local ContentList = p:Create("UIListLayout", {
-				SortOrder = Enum.SortOrder.LayoutOrder,
-				Padding = UDim.new(0, 6),
+			local List = p:Create("UIListLayout", {
+				Padding = UDim.new(0, 8),
 				Parent = Content
 			})
 
-			function b:AddParagraph(_)
-				local _ = _ or {}
-				local _ = {
-					Title = _.title or _.Title or "Paragraph",
-					Content = _.content or _.Content or _.desc or _.Desc,
-					Sections = c,
-				}
-				local _ = h:AddParagraph(_)
-				return _
-			end
-			function b:AddButton(_)
-				local _ = _ or {}
-				local _ = {
-					Title = _.title or _.Title or "Button",
-					Description = _.description or _.Description or _.desc or _.Desc or false,
-					Callback = _.callback or _.Callback or function() end,
-					Sections = c,
-				}
-				local _ = h:AddButton(_)
-				return _
-			end
 			function b:AddToggle(_)
-				local _ = _ or {}
-				local _ = {
-					Title = _.title or _.Title or "Toggle",
-					Description = _.description or _.Description or _.desc or _.Descm or false,
-					Default = _.default or _.Default or false,
-					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
-					Sections = c,
-				}
-				local _ = h:AddToggle(_)
-				return _
+				_ = _ or {}
+				_.Sections = Content
+				return h:AddToggle(_)
 			end
-			function b:AddDropdown(_)
-				local _ = _ or {}
-				local _ = {
-					Title = _.title or _.Title or "Dropdown",
-					Description = _.description or _.Description or _.desc or _.Desc or false,
-					Values = _.values or _.Values or _.options or _.Options or _.list or _.List or {},
-					Multi = _.multi or _.Multi or false,
-					Default = _.default or _.Default or {},
-					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
-					Sections = c,
-				}
-				local _ = h:AddDropdown(_)
-				return _
+
+			function b:AddButton(_)
+				_ = _ or {}
+				_.Sections = Content
+				return h:AddButton(_)
 			end
+
 			function b:AddSlider(_)
-				local _ = _ or {}
-				local _ = {
-					Title = _.title or _.Title or "Slider",
-					Description = _.description or _.Description or _.desc or _.Desc or false,
-					Default = _.default or _.Default or _.value or _.Value or 0,
-					Min = _.min or _.Min or 0,
-					Max = _.max or _.Max or 100,
-					Decimal = _.decimal or _.Decimal or 0,
-					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
-					Sections = c,
-				}
-				local _ = h:AddSlider(_)
-				return _
+				_ = _ or {}
+				_.Sections = Content
+				return h:AddSlider(_)
 			end
+
+			function b:AddDropdown(_)
+				_ = _ or {}
+				_.Sections = Content
+				return h:AddDropdown(_)
+			end
+
 			function b:AddInput(_)
-				local _ = _ or {}
-				local _ = {
-					Title = _.title or _.Title or "Input",
-					Default = _.default or _.Default or _.value or _.Value or "",
-					Placeholder = _.placeholder or _.Placeholder or "",
-					Numeric = _.numeric or _.Numeric or false,
-					Finished = _.finished or _.Finished or false,
-					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
-					Sections = c,
-				}
-				local _ = h:AddInput(_)
-				return _
+				_ = _ or {}
+				_.Sections = Content
+				return h:AddInput(_)
 			end
 
-			p:Connect(ContentList:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-				Border.Size = UDim2.new(1, -10, 0, ContentList.AbsoluteContentSize.Y + 50)
-				c.Size = UDim2.new(1, 0, 0, Border.AbsoluteSize.Y + 10)
+			p:Connect(List:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+				Border.Size = UDim2.new(1, -12, 0, List.AbsoluteContentSize.Y + 50)
 			end)
-						local function UpdateLines()
-				local totalWidth = Border.AbsoluteSize.X
-				local textWidth = TitleBG.AbsoluteSize.X
-				local padding = 20
-
-				local lineWidth = (totalWidth - textWidth - padding*2) / 2
-				if lineWidth < 10 then lineWidth = 10 end
-
-				LineL.Size = UDim2.new(0, lineWidth, 0, 1)
-				LineR.Size = UDim2.new(0, lineWidth, 0, 1)
-
-				LineL.Position = UDim2.new(0, 10, 0, 20)
-				LineR.Position = UDim2.new(0, totalWidth - lineWidth - 10, 0, 20)
-			end
-
-			task.defer(UpdateLines)
-			p:Connect(Text:GetPropertyChangedSignal("AbsoluteSize"), UpdateLines)
-			p:Connect(Border:GetPropertyChangedSignal("AbsoluteSize"), UpdateLines)
 
 			return b
 		end
