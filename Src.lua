@@ -3626,7 +3626,7 @@ function p:Window(_)
 				BackgroundColor3 = Color3.fromRGB(180,180,180),
 				BorderSizePixel = 0,
 				Size = UDim2.new(0.5, -40, 0, 1),
-				Position = UDim2.new(0.5, 40, 0, 0),
+				Position = UDim2.new(0.5, 40, 0, 20),
 				Parent = Border
 			})
 
