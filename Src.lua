@@ -3574,6 +3574,7 @@ function p:Window(_)
 			end
 			return d
 		end
+		
 		function h:AddSection(_)
 			local b = {}
 			local _ = _ or {}
@@ -3583,59 +3584,39 @@ function p:Window(_)
 				Name = "SectionHolder",
 				BackgroundTransparency = 1,
 				LayoutOrder = 7,
-				Size = UDim2.new(1, 0, 0, 40),
+				Size = UDim2.new(1, 0, 0, 60),
 				Parent = g,
 			})
 
 			local a = p:Create("UIListLayout", {
 				SortOrder = Enum.SortOrder.LayoutOrder,
-				Padding = UDim.new(0, 8),
+				Padding = UDim.new(0, 6),
 				Parent = c
 			})
 
 			local Border = p:Create("Frame", {
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, -20, 0, 0),
-				Position = UDim2.new(0, 10, 0, 20),
+				Size = UDim2.new(1, -10, 1, 0),
+				Position = UDim2.new(0, 5, 0, 0),
 				Parent = c
 			})
 
 			local Stroke = p:Create("UIStroke", {
 				Color = Color3.fromRGB(160,160,160),
 				Thickness = 1,
-				Transparency = 0.2,
 				Parent = Border
 			})
 
-			p:Create("UICorner", {
+			local Round = p:Create("UICorner", {
 				CornerRadius = UDim.new(0, 10),
 				Parent = Border
 			})
 
-			Border.ZIndex = 1
-			Stroke.ZIndex = 1
 
-			local TitleBG = p:Create("Frame", {
-				BackgroundColor3 = p.Settings.BackgroundColor 
-					or Color3.fromRGB(30,22,15),
-				BackgroundTransparency = 0,
-				AutomaticSize = Enum.AutomaticSize.X,
-				Size = UDim2.new(0, 0, 0, 24),
-				AnchorPoint = Vector2.new(0.5, 0),
-				Position = UDim2.new(0.5, 0, 0, -12),
-				ZIndex = 5,
+			local Header = p:Create("Frame", {
+				BackgroundTransparency = 1,
+				Size = UDim2.new(1, 0, 0, 30),
 				Parent = Border
-			})
-
-			p:Create("UICorner", {
-				CornerRadius = UDim.new(0, 6),
-				Parent = TitleBG
-			})
-
-			p:Create("UIPadding", {
-				PaddingLeft = UDim.new(0, 14),
-				PaddingRight = UDim.new(0, 14),
-				Parent = TitleBG
 			})
 
 			local Text = p:Create("TextLabel", {
@@ -3643,11 +3624,26 @@ function p:Window(_)
 					or Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold),
 				Text = _.Title,
 				TextColor3 = Color3.fromRGB(240,240,240),
-				TextSize = 18,
+				TextSize = 16,
 				BackgroundTransparency = 1,
+				AnchorPoint = Vector2.new(0.5, 0),
+				Position = UDim2.new(0.5, 0, 0, -11),
 				AutomaticSize = Enum.AutomaticSize.X,
-				ZIndex = 6,
-				Parent = TitleBG
+				Parent = Border,
+				TextXAlignment = Enum.TextXAlignment.Center
+			})
+
+			local Content = p:Create("Frame", {
+				BackgroundTransparency = 1,
+				Size = UDim2.new(1, -20, 1, -30),
+				Position = UDim2.new(0, 10, 0, 30),
+				Parent = Border
+			})
+
+			local ContentList = p:Create("UIListLayout", {
+				SortOrder = Enum.SortOrder.LayoutOrder,
+				Padding = UDim.new(0, 6),
+				Parent = Content
 			})
 
 			function b:AddParagraph(_)
@@ -3655,7 +3651,7 @@ function p:Window(_)
 				local _ = {
 					Title = _.title or _.Title or "Paragraph",
 					Content = _.content or _.Content or _.desc or _.Desc,
-					Sections = Border,
+					Sections = Content,
 				}
 				return h:AddParagraph(_)
 			end
@@ -3666,7 +3662,7 @@ function p:Window(_)
 					Title = _.title or _.Title or "Button",
 					Description = _.description or _.Description or _.desc or _.Desc or false,
 					Callback = _.callback or _.Callback or function() end,
-					Sections = Border,
+					Sections = Content,
 				}
 				return h:AddButton(_)
 			end
@@ -3678,7 +3674,7 @@ function p:Window(_)
 					Description = _.description or _.Description or _.desc or _.Desc or false,
 					Default = _.default or _.Default or false,
 					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
-					Sections = Border,
+					Sections = Content,
 				}
 				return h:AddToggle(_)
 			end
@@ -3692,7 +3688,7 @@ function p:Window(_)
 					Multi = _.multi or _.Multi or false,
 					Default = _.default or _.Default or {},
 					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
-					Sections = Border,
+					Sections = Content,
 				}
 				return h:AddDropdown(_)
 			end
@@ -3707,7 +3703,7 @@ function p:Window(_)
 					Max = _.max or _.Max or 100,
 					Decimal = _.decimal or _.Decimal or 0,
 					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
-					Sections = Border,
+					Sections = Content,
 				}
 				return h:AddSlider(_)
 			end
@@ -3721,22 +3717,21 @@ function p:Window(_)
 					Numeric = _.numeric or _.Numeric or false,
 					Finished = _.finished or _.Finished or false,
 					Flags = _.flags or _.Flags or _.pointer or _.Pointer or _.flag or _.Flag or false,
-					Sections = Border,
+					Sections = Content,
 				}
 				return h:AddInput(_)
 			end
-			
-			p:Connect(a:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-				Border.Size = UDim2.new(1, -20, 0, a.AbsoluteContentSize.Y + 20)
-				c.Size = UDim2.new(1, 0, 0, Border.Size.Y.Offset + 20)
+
+			p:Connect(ContentList:GetPropertyChangedSignal("AbsoluteContentSize"), function()
+				Border.Size = UDim2.new(1, -10, 0, ContentList.AbsoluteContentSize.Y + 50)
+				c.Size = UDim2.new(1, 0, 0, Border.AbsoluteSize.Y + 10)
 			end)
 
 			return b
 		end
-
 		return h
 	end
-
+	
 	function k:Dialog(_)
 		local a = {}
 		local _ = _ or {}
