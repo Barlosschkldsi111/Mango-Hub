@@ -3954,6 +3954,4 @@ function p:Window(_)
 	o:SetTheme(p.Theme)
 	return k
 end
-game:GetService("CoreGui").NEXT_GEN.MainFrame.TextLabel
-
 return p, o
