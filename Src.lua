@@ -3574,7 +3574,7 @@ function p:Window(_)
 			end
 			return d
 		end
-		
+
 		function h:AddSection(_)
 			local b = {}
 			local _ = _ or {}
@@ -3586,6 +3586,7 @@ function p:Window(_)
 				LayoutOrder = 7,
 				Size = UDim2.new(1, 0, 0, 60),
 				Parent = g,
+				ZIndex = 1
 			})
 
 			local a = p:Create("UIListLayout", {
@@ -3598,13 +3599,15 @@ function p:Window(_)
 				BackgroundTransparency = 1,
 				Size = UDim2.new(1, -10, 1, 0),
 				Position = UDim2.new(0, 5, 0, 0),
-				Parent = c
+				Parent = c,
+				ZIndex = 1
 			})
 
 			local Stroke = p:Create("UIStroke", {
 				Color = Color3.fromRGB(160,160,160),
 				Thickness = 1,
-				Parent = Border
+				Parent = Border,
+				ZIndex = 2
 			})
 
 			local Round = p:Create("UICorner", {
@@ -3612,11 +3615,11 @@ function p:Window(_)
 				Parent = Border
 			})
 
-
 			local Header = p:Create("Frame", {
 				BackgroundTransparency = 1,
 				Size = UDim2.new(1, 0, 0, 30),
-				Parent = Border
+				Parent = Border,
+				ZIndex = 3
 			})
 
 			local Text = p:Create("TextLabel", {
@@ -3630,14 +3633,16 @@ function p:Window(_)
 				Position = UDim2.new(0.5, 0, 0, -11),
 				AutomaticSize = Enum.AutomaticSize.X,
 				Parent = Border,
-				TextXAlignment = Enum.TextXAlignment.Center
+				TextXAlignment = Enum.TextXAlignment.Center,
+				ZIndex = 10 
 			})
 
 			local Content = p:Create("Frame", {
 				BackgroundTransparency = 1,
 				Size = UDim2.new(1, -20, 1, -30),
 				Position = UDim2.new(0, 10, 0, 30),
-				Parent = Border
+				Parent = Border,
+				ZIndex = 1
 			})
 
 			local ContentList = p:Create("UIListLayout", {
@@ -3729,6 +3734,7 @@ function p:Window(_)
 
 			return b
 		end
+
 		return h
 	end
 	
