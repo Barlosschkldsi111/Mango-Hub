@@ -3575,38 +3575,41 @@ function p:Window(_)
 			return d
 		end
 		function h:AddSection(_)
-			local b = {}
 			local _ = _ or {}
 			local _ = { Title = _.title or _.Title or "Section" }
+
 			local c = p:Create("Frame", {
 				Name = "SectionHolder",
-				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 				BackgroundTransparency = 1,
-				BorderColor3 = Color3.fromRGB(0, 0, 0),
-				BorderSizePixel = 0,
-				LayoutOrder = 7,
-				Size = UDim2.new(1, 0, 0, 65),
+				Size = UDim2.new(1, 0, 0, 30),
 				Parent = g,
 			})
-			local a = p:Create(
-				"UIListLayout",
-				{ Name = "UIListLayout", SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 5), Parent = c }
-			)
-			local _ = p:Create("TextLabel", {
-				Name = "TextLabel",
-				FontFace = p.Settings.FontFace
-					or Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
-				RichText = true,
+			local LeftLine = p:Create("Frame", {
+				BackgroundColor3 = Color3.fromRGB(120,120,120),
+				BorderSizePixel = 0,
+				Position = UDim2.new(0, 0, 0.5, 0),
+				Size = UDim2.new(0.45, -5, 0, 1),
+				Parent = c
+			})
+			local Text = p:Create("TextLabel", {
+				FontFace = p.Settings.FontFace 
+					or Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold),
 				Text = _.Title,
 				TextColor3 = Color3.fromRGB(240, 240, 240),
-				TextSize = 18,
-				TextXAlignment = Enum.TextXAlignment.Left,
-				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+				TextSize = 16,
 				BackgroundTransparency = 1,
-				BorderColor3 = Color3.fromRGB(0, 0, 0),
-				Position = UDim2.fromOffset(0, 2),
-				Size = UDim2.new(1, -16, 0, 18),
-				Parent = c,
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				Position = UDim2.new(0.5, 0, 0.5, 0),
+				Size = UDim2.new(0, 200, 1, 0),
+				TextXAlignment = Enum.TextXAlignment.Center,
+				Parent = c
+			})
+			local RightLine = p:Create("Frame", {
+				BackgroundColor3 = Color3.fromRGB(120,120,120),
+				BorderSizePixel = 0,
+				Position = UDim2.new(0.55, 5, 0.5, 0),
+				Size = UDim2.new(0.45, -5, 0, 1),
+				Parent = c
 			})
 			function b:AddParagraph(_)
 				local _ = _ or {}
