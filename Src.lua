@@ -3635,7 +3635,7 @@ function p:Window(_)
 				AutomaticSize = Enum.AutomaticSize.X,
 				Size = UDim2.new(0, 0, 0, 22),
 				AnchorPoint = Vector2.new(0.5, 0),
-				Position = UDim2.new(0.5, 0, 0,7),
+				Position = UDim2.new(0.5, 0, 0, 7),
 				Parent = Border
 			})
 
@@ -3954,6 +3954,5 @@ function p:Window(_)
 	o:SetTheme(p.Theme)
 	return k
 end
-game:GetService("CoreGui").NEXT_GEN.MainFrame.TextLabel
 
 return p, o
