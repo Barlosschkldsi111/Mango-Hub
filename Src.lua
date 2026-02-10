@@ -3574,7 +3574,6 @@ function p:Window(_)
 			end
 			return d
 		end
-
 		function h:AddSection(_)
 			local b = {}
 			local _ = _ or {}
@@ -3724,7 +3723,8 @@ function p:Window(_)
 
 			return b
 		end
-
+		return h
+	end
 	function k:Dialog(_)
 		local a = {}
 		local _ = _ or {}
