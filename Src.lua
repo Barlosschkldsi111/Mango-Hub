@@ -3574,6 +3574,7 @@ function p:Window(_)
 			end
 			return d
 		end
+		
 		function h:AddSection(_)
 			local _ = _ or {}
 			local _ = { Title = _.title or _.Title or "Section" }
@@ -3584,13 +3585,7 @@ function p:Window(_)
 				Size = UDim2.new(1, 0, 0, 30),
 				Parent = g,
 			})
-			local LeftLine = p:Create("Frame", {
-				BackgroundColor3 = Color3.fromRGB(120,120,120),
-				BorderSizePixel = 0,
-				Position = UDim2.new(0, 0, 0.5, 0),
-				Size = UDim2.new(0.45, -5, 0, 1),
-				Parent = c
-			})
+
 			local Text = p:Create("TextLabel", {
 				FontFace = p.Settings.FontFace 
 					or Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold),
@@ -3600,17 +3595,30 @@ function p:Window(_)
 				BackgroundTransparency = 1,
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				Position = UDim2.new(0.5, 0, 0.5, 0),
-				Size = UDim2.new(0, 200, 1, 0),
+				AutomaticSize = Enum.AutomaticSize.X,
+				Size = UDim2.new(0, 0, 1, 0),
 				TextXAlignment = Enum.TextXAlignment.Center,
 				Parent = c
 			})
+
+			local LeftLine = p:Create("Frame", {
+				BackgroundColor3 = Color3.fromRGB(120,120,120),
+				BorderSizePixel = 0,
+				AnchorPoint = Vector2.new(1, 0.5),
+				Position = UDim2.new(0.5, -Text.TextBounds.X/2 - 8, 0.5, 0),
+				Size = UDim2.new(0.5, 0, 0, 1),
+				Parent = c
+			})
+
 			local RightLine = p:Create("Frame", {
 				BackgroundColor3 = Color3.fromRGB(120,120,120),
 				BorderSizePixel = 0,
-				Position = UDim2.new(0.55, 5, 0.5, 0),
-				Size = UDim2.new(0.45, -5, 0, 1),
+				AnchorPoint = Vector2.new(0, 0.5),
+				Position = UDim2.new(0.5, Text.TextBounds.X/2 + 8, 0.5, 0),
+				Size = UDim2.new(0.5, 0, 0, 1),
 				Parent = c
 			})
+
 			function b:AddParagraph(_)
 				local _ = _ or {}
 				local _ = {
